@@ -8,11 +8,11 @@ const workoutRoutes = require('./routes/workouts');
 const app = express();
 
 // Serve static files from the React app build directory
-app.use(express.static(path.join(__dirname, 'frontend/build')));
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
 
 // Any other routes will be handled by React (client-side routing)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
 });
 
 //middlewares
