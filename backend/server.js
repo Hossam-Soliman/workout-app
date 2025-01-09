@@ -1,11 +1,14 @@
 require('dotenv').config();
-
+const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const workoutRoutes = require('./routes/workouts');
 
 //express app
 const app = express();
+
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, 'frontend/build')));
 
 //middlewares
 app.use(express.json());
