@@ -4,29 +4,29 @@ const express = require('express');
 const mongoose = require('mongoose');
 const workoutRoutes = require('./routes/workouts');
 
-//express app
+// Express app
 const app = express();
 
-// // Serve static files from the React app build directory
-// app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
+// Middlewares
+app.use(express.json()); // Middleware to parse JSON request bodies
 
-// // Any other routes will be handled by React (client-side routing)
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
-// });
+// API routes
+app.use('/api/workouts', workoutRoutes); // Define your API routes here
 
-//middlewares
-app.use(express.json());
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
 
-//routes
-app.use('/api/workouts', workoutRoutes);
+// Catch-all handler to serve React's index.html for unknown routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
+});
 
-//connect to db
+// Connect to MongoDB
 mongoose
   .connect(process.env.MONG_URI)
   .then(() => {
     app.listen(process.env.PORT || 4000, () => {
-      console.log('listening to port', process.env.PORT);
+      console.log('Listening on port', process.env.PORT || 4000);
     });
   })
   .catch((error) => console.log(error));
