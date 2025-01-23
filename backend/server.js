@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const workoutRoutes = require('./routes/workouts');
+const userRoutes = require('./routes/users');
 
 // Express app
 const app = express();
@@ -11,7 +12,8 @@ const app = express();
 app.use(express.json()); // Middleware to parse JSON request bodies
 
 // API routes
-app.use('/api/workouts', workoutRoutes); // Define your API routes here
+app.use('/api/workouts', workoutRoutes);
+app.use('/api/user', userRoutes);
 
 // Serve static files from the React app build directory
 app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
