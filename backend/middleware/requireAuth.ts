@@ -13,7 +13,7 @@ const requireAuth = async (req: AuthRequest, res: Response, next: NextFunction) 
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res.status(401).json({ error: 'Authorization token required' });
+    res.status(401).json({ error: 'Authorization token required' });
   }
 
   const token = authorization.split(' ')[1];
@@ -23,13 +23,13 @@ const requireAuth = async (req: AuthRequest, res: Response, next: NextFunction) 
 
     const user = await User.findOne({ _id: decodedToken.id }).select<{ _id: string }>('_id');
     if (!user) {
-      return res.status(401).json({ error: 'User not found' });
+      res.status(401).json({ error: 'User not found' });
     }
     req.user = { _id: user._id.toString() };
 
     next();
   } catch (err) {
-    res.status(401).json({ error: "Request isn't authorized" });
+    res.status(401).json({ error: 'Request isn\'t authorized' });
   }
 };
 
